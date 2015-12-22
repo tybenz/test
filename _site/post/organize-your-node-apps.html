@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <base href="/~/-/">
+    <title> ~</title>
+    <link href="/~/feed" rel="alternate" type="application/atom+xml" />
+    <link href="data:image/gif;base64,R0lGODlhEAAQAPABAA0NDf///yH/C1hNUCBEYXRhWE1QAz94cAAh+QQFAAABACwAAAAAEAAQAAACF4SPqcvtn0KARlJgaYb7dfc14UWW5lEAADs=" rel="icon" type="image/x-icon" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Mono:400,700' rel='stylesheet' type='text/css'>
+    <style>
+    body {
+      font: 16px/1.5em 'Roboto Mono', 'Consolas', 'Andale Mono', 'Monaco', 'Courier New', Courier, monospace;
+      padding: 1ch;
+      margin: 0;
+    }
+    main, footer, body > header {
+      max-width: 64ch;
+      margin: auto;
+    }
+    main {
+      box-sizing: border-box;
+      padding: 1ch 0 2ch;
+      min-height: calc(100vh - 12ch);
+    }
+    h1 {
+      font-size: 1em;
+      font-weight: 700;
+    }
+    h1, .timestamp {
+      margin: 0;
+    }
+    a {
+      color: blue;
+      background-image: linear-gradient(to bottom,blue 75%,blue 75%);
+      text-shadow: -1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white;
+      background-repeat: repeat-x;
+      background-size: 1px 1px;
+      background-position: 0 96%;
+      text-decoration: none;
+    }
+    .heading a {
+      color: black;
+      background-image: linear-gradient(to bottom,black 75%,black 75%);
+    }
+    .heading {
+      margin: 0 0 2ch;
+      padding: 0;
+    }
+    article.txt p {
+      white-space: pre-wrap;
+    }
+    .username a {
+      text-shadow: none;
+      background-image: none;
+      background-color: #333;
+      color: #EEE;
+      padding: 1ch;
+      border: 0;
+    }
+    hr {
+      border: 1px solid #ECECEC;
+    }
+    p {
+      margin: 1.5em 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-size: 1em;
+    }
+    pre {
+      padding: 1ch;
+      background-color: #f4f4f4;
+      overflow-x: auto;
+    }
+    ul, ol {
+      padding-left: 0;
+    }
+    li > ul, li > ol {
+      padding-left: 2ch;
+    }
+    blockquote {
+      font-style: italic;
+      margin: 1.5em 2ch;
+    }
+    img {
+      max-width:100%;
+    }
+    footer a {
+      color: lightgrey;
+      background-image: linear-gradient(to bottom,lightgrey 75%,lightgrey 75%);
+    }
+    @media screen and (min-width:1367px) {
+      body {
+        font: 20px/1.75em 'Roboto Mono';
+      }
+      hr {
+        border: 4px solid #ECECEC;
+      }
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      padding-top: 30px; height: 0; overflow: hidden;
+    }
+
+    .video-container.skinny {
+      padding-bottom: 43.076923%;
+    }
+
+    .video-container.slate {
+      padding-bottom: 50%;
+      margin-bottom: 1em;
+    }
+
+    .video-container iframe,
+    .video-container object,
+    .video-container embed {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="username"><a href="/">Tyler Benziger</a></p>
+      </header>
+      <article>
+        <header class="heading">
+          <h1>Paper Router</h1>
+          <p class="timestamp">May 29, 2014</p>
+          <hr>
+        </header>
+        <p>I wrote a node module called <a href="http://tybenz.com/paper-router">paper-router</a>.
+It&#39;s sole purpose is to help me organize my node apps.</p>
+
+<h2>It turns this</h2>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">restify</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;restify&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">BananaModel</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s1">&#39;./models/banana.js&#39;</span> <span class="p">);</span>
+<span class="kd">var</span> <span class="nx">PeelModel</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s1">&#39;./models/peel.js&#39;</span> <span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">restify</span><span class="p">.</span><span class="nx">createServer</span><span class="p">({</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;luca&#39;</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span> <span class="kd">function</span> <span class="nx">crossOrigin</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">header</span><span class="p">(</span> <span class="s2">&quot;Access-Control-Allow-Origin&quot;</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span> <span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">header</span><span class="p">(</span> <span class="s2">&quot;Access-Control-Allow-Headers&quot;</span><span class="p">,</span> <span class="s2">&quot;X-Requested-With&quot;</span> <span class="p">);</span>
+    <span class="k">return</span> <span class="nx">next</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span> <span class="nx">restify</span><span class="p">.</span><span class="nx">acceptParser</span><span class="p">(</span> <span class="nx">server</span><span class="p">.</span><span class="nx">acceptable</span> <span class="p">)</span> <span class="p">);</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span> <span class="nx">restify</span><span class="p">.</span><span class="nx">queryParser</span><span class="p">()</span> <span class="p">);</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span> <span class="nx">restify</span><span class="p">.</span><span class="nx">bodyParser</span><span class="p">()</span> <span class="p">);</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">pre</span><span class="p">(</span> <span class="nx">restify</span><span class="p">.</span><span class="nx">pre</span><span class="p">.</span><span class="nx">sanitizePath</span><span class="p">()</span> <span class="p">);</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span> <span class="p">{</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;You are home&#39;</span> <span class="p">}</span> <span class="p">);</span>
+<span class="p">})</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span> <span class="s1">&#39;/bananas&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span> <span class="nx">BananaModel</span><span class="p">.</span><span class="nx">getAll</span><span class="p">()</span> <span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span> <span class="s1">&#39;/bananas&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">banana</span> <span class="o">=</span> <span class="nx">BananaModel</span><span class="p">.</span><span class="k">new</span><span class="p">({</span>
+        <span class="nx">weight</span><span class="o">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">weight</span><span class="p">,</span>
+        <span class="nx">length</span><span class="o">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span> <span class="nx">banana</span> <span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span> <span class="s1">&#39;/bananas/:banana_id/peels&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">peels</span> <span class="o">=</span> <span class="nx">PeelModel</span><span class="p">.</span><span class="nx">where</span><span class="p">(</span> <span class="p">{</span> <span class="nx">banana_id</span><span class="o">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">banana_id</span> <span class="p">}</span> <span class="p">);</span>
+
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span> <span class="nx">peels</span> <span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span> <span class="mi">8000</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s2">&quot;%s listening at %s&quot;</span><span class="p">,</span> <span class="nx">server</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">server</span><span class="p">.</span><span class="nx">url</span> <span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
+<h2>Into this</h2>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">restify</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;restify&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">PaperRouter</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s1">&#39;paper-router&#39;</span> <span class="p">);</span>
+<span class="kd">var</span> <span class="nx">routes</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s1">&#39;./routes&#39;</span> <span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">restify</span><span class="p">.</span><span class="nx">createServer</span><span class="p">({</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;luca&#39;</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span> <span class="kd">function</span> <span class="nx">crossOrigin</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">header</span><span class="p">(</span> <span class="s2">&quot;Access-Control-Allow-Origin&quot;</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span> <span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">header</span><span class="p">(</span> <span class="s2">&quot;Access-Control-Allow-Headers&quot;</span><span class="p">,</span> <span class="s2">&quot;X-Requested-With&quot;</span> <span class="p">);</span>
+    <span class="k">return</span> <span class="nx">next</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span> <span class="nx">restify</span><span class="p">.</span><span class="nx">acceptParser</span><span class="p">(</span> <span class="nx">server</span><span class="p">.</span><span class="nx">acceptable</span> <span class="p">)</span> <span class="p">);</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span> <span class="nx">restify</span><span class="p">.</span><span class="nx">queryParser</span><span class="p">()</span> <span class="p">);</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span> <span class="nx">restify</span><span class="p">.</span><span class="nx">bodyParser</span><span class="p">()</span> <span class="p">);</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">pre</span><span class="p">(</span> <span class="nx">restify</span><span class="p">.</span><span class="nx">pre</span><span class="p">.</span><span class="nx">sanitizePath</span><span class="p">()</span> <span class="p">);</span>
+
+<span class="c1">//</span>
+<span class="c1">// Using paper router to separate out controllers from routes</span>
+<span class="c1">// Routes are read in from a separate file (see routes.js below)</span>
+<span class="c1">//</span>
+<span class="kd">var</span> <span class="nx">router</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PaperRouter</span><span class="p">(</span> <span class="nx">server</span><span class="p">,</span> <span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">&#39;/controllers&#39;</span><span class="p">,</span> <span class="nx">routes</span> <span class="p">);</span>
+
+<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span> <span class="mi">8000</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s2">&quot;%s listening at %s&quot;</span><span class="p">,</span> <span class="nx">server</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">server</span><span class="p">.</span><span class="nx">url</span> <span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>routes.js:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">router</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// GET &#39;/&#39; =&gt; controller: &#39;home&#39;, action: &#39;index&#39;</span>
+    <span class="nx">router</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;home#index&#39;</span> <span class="p">);</span>
+
+    <span class="c1">// Creates the following routes but only if the actions exist</span>
+    <span class="c1">// GET &#39;/bananas&#39; =&gt; controller: &#39;bananas&#39;, action: &#39;index&#39;</span>
+    <span class="c1">// GET &#39;/bananas/:id&#39; =&gt; controller: &#39;bananas&#39;, action: &#39;show&#39;</span>
+    <span class="c1">// GET &#39;/bananas/new&#39; =&gt; controller: &#39;bananas&#39;, action: &#39;new&#39;</span>
+    <span class="c1">// GET &#39;/bananas/:id/edit&#39; =&gt; controller: &#39;bananas&#39;, action: &#39;edit&#39;</span>
+    <span class="c1">// POST &#39;/bananas&#39; =&gt; controller: &#39;bananas&#39;, action: &#39;create&#39;</span>
+    <span class="c1">// PUT &#39;/bananas/:id&#39; =&gt; controller: &#39;bananas&#39;, action: &#39;update&#39;</span>
+    <span class="c1">// DELETE &#39;/bananas/:id&#39; =&gt; controller: &#39;bananas&#39;, action: &#39;destroy&#39;</span>
+    <span class="nx">router</span><span class="p">.</span><span class="nx">resources</span><span class="p">(</span> <span class="s1">&#39;bananas&#39;</span> <span class="p">);</span>
+
+    <span class="c1">// Creates the following routes but only if the actions exist</span>
+    <span class="c1">// GET &#39;/bananas/:banana_id/peels&#39; =&gt; controller: &#39;peels&#39;, action: &#39;index&#39;</span>
+    <span class="c1">// GET &#39;/bananas/:banana_id/peels/:id&#39; =&gt; controller: &#39;peels&#39;, action: &#39;show&#39;</span>
+    <span class="c1">// GET &#39;/bananas/:banana_id/peels/new&#39; =&gt; controller: &#39;peels&#39;, action: &#39;new&#39;</span>
+    <span class="c1">// GET &#39;/bananas/:banana_id/peels/:id/edit&#39; =&gt; controller: &#39;peels&#39;, action: &#39;edit&#39;</span>
+    <span class="c1">// POST &#39;/bananas/:banana_id/peels&#39; =&gt; controller: &#39;peels&#39;, action: &#39;create&#39;</span>
+    <span class="c1">// PUT &#39;/bananas/:banana_id/peels/:id&#39; =&gt; controller: &#39;peels&#39;, action: &#39;update&#39;</span>
+    <span class="c1">// DELETE &#39;/bananas/:banana_id/peels/:id&#39; =&gt; controller: &#39;peels&#39;, action: &#39;destroy&#39;</span>
+    <span class="nx">router</span><span class="p">.</span><span class="nx">resources</span><span class="p">(</span> <span class="s1">&#39;peels&#39;</span><span class="p">,</span> <span class="s1">&#39;/bananas/:banana_id&#39;</span> <span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>bananasController.js:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// bananasController.js</span>
+<span class="kd">var</span> <span class="nx">BananaModel</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s1">&#39;../models/banana.js&#39;</span> <span class="p">);</span>
+
+<span class="c1">// Controllers are just plain objects with actions as properties</span>
+<span class="c1">// Use typical CRUD action names to line up with paper-router&#39;s</span>
+<span class="c1">// resourceful routing (see routes.js)</span>
+<span class="kd">var</span> <span class="nx">BananaController</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">index</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span> <span class="nx">BananaModel</span><span class="p">.</span><span class="nx">getAll</span><span class="p">()</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nx">create</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">banana</span> <span class="o">=</span> <span class="nx">BananaModel</span><span class="p">.</span><span class="k">new</span><span class="p">({</span>
+            <span class="nx">weight</span><span class="o">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">weight</span><span class="p">,</span>
+            <span class="nx">length</span><span class="o">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+        <span class="p">})</span>
+        <span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+
+        <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span> <span class="nx">banana</span> <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">BananaController</span><span class="p">;</span>
+</code></pre></div>
+<p>peelsController.js</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// peelsController.js</span>
+<span class="kd">var</span> <span class="nx">PeelModel</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span> <span class="s1">&#39;../models/peel.js&#39;</span> <span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">PeelsController</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">index</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">peels</span> <span class="o">=</span> <span class="nx">PeelModel</span><span class="p">.</span><span class="nx">where</span><span class="p">(</span> <span class="p">{</span> <span class="nx">banana_id</span><span class="o">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">banana_id</span> <span class="p">}</span> <span class="p">);</span>
+
+        <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span> <span class="nx">peels</span> <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">PeelsController</span><span class="p">;</span>
+</code></pre></div>
+<p>homeController.js</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// homeController.js</span>
+<span class="kd">var</span> <span class="nx">HomeController</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">index</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span> <span class="p">{</span> <span class="nx">message</span><span class="o">:</span> <span class="s1">&#39;You are home&#39;</span> <span class="p">}</span> <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">HomeController</span><span class="p">;</span>
+</code></pre></div>
+      </article>
+    </main>
+    <footer>
+      <a href="/" style="border:0">Tyler Benziger</a>
+      <a href="/about" style="border:0">About</a>
+      <a href="https://twitter.com/tybenz" style="border:0">Twitter</a>
+      <a href="https://github.com/tybenz" style="border:0">Github</a>
+    </footer>
+  </body>
+</html>

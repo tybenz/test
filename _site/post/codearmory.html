@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <base href="/~/-/">
+    <title> ~</title>
+    <link href="/~/feed" rel="alternate" type="application/atom+xml" />
+    <link href="data:image/gif;base64,R0lGODlhEAAQAPABAA0NDf///yH/C1hNUCBEYXRhWE1QAz94cAAh+QQFAAABACwAAAAAEAAQAAACF4SPqcvtn0KARlJgaYb7dfc14UWW5lEAADs=" rel="icon" type="image/x-icon" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Mono:400,700' rel='stylesheet' type='text/css'>
+    <style>
+    body {
+      font: 16px/1.5em 'Roboto Mono', 'Consolas', 'Andale Mono', 'Monaco', 'Courier New', Courier, monospace;
+      padding: 1ch;
+      margin: 0;
+    }
+    main, footer, body > header {
+      max-width: 64ch;
+      margin: auto;
+    }
+    main {
+      box-sizing: border-box;
+      padding: 1ch 0 2ch;
+      min-height: calc(100vh - 12ch);
+    }
+    h1 {
+      font-size: 1em;
+      font-weight: 700;
+    }
+    h1, .timestamp {
+      margin: 0;
+    }
+    a {
+      color: blue;
+      background-image: linear-gradient(to bottom,blue 75%,blue 75%);
+      text-shadow: -1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white;
+      background-repeat: repeat-x;
+      background-size: 1px 1px;
+      background-position: 0 96%;
+      text-decoration: none;
+    }
+    .heading a {
+      color: black;
+      background-image: linear-gradient(to bottom,black 75%,black 75%);
+    }
+    .heading {
+      margin: 0 0 2ch;
+      padding: 0;
+    }
+    article.txt p {
+      white-space: pre-wrap;
+    }
+    .username a {
+      text-shadow: none;
+      background-image: none;
+      background-color: #333;
+      color: #EEE;
+      padding: 1ch;
+      border: 0;
+    }
+    hr {
+      border: 1px solid #ECECEC;
+    }
+    p {
+      margin: 1.5em 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-size: 1em;
+    }
+    pre {
+      padding: 1ch;
+      background-color: #f4f4f4;
+      overflow-x: auto;
+    }
+    ul, ol {
+      padding-left: 0;
+    }
+    li > ul, li > ol {
+      padding-left: 2ch;
+    }
+    blockquote {
+      font-style: italic;
+      margin: 1.5em 2ch;
+    }
+    img {
+      max-width:100%;
+    }
+    footer a {
+      color: lightgrey;
+      background-image: linear-gradient(to bottom,lightgrey 75%,lightgrey 75%);
+    }
+    @media screen and (min-width:1367px) {
+      body {
+        font: 20px/1.75em 'Roboto Mono';
+      }
+      hr {
+        border: 4px solid #ECECEC;
+      }
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      padding-top: 30px; height: 0; overflow: hidden;
+    }
+
+    .video-container.skinny {
+      padding-bottom: 43.076923%;
+    }
+
+    .video-container.slate {
+      padding-bottom: 50%;
+      margin-bottom: 1em;
+    }
+
+    .video-container iframe,
+    .video-container object,
+    .video-container embed {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="username"><a href="/">Tyler Benziger</a></p>
+      </header>
+      <article>
+        <header class="heading">
+          <h1>Code Armory</h1>
+          <p class="timestamp">September 18, 2012</p>
+          <hr>
+        </header>
+        <p>I&#39;ve been using Gists a lot recently to pass code back and forth between
+myself and my co-workers, and I&#39;m starting to realize more and more how
+valuable good code snippets can be. I find myself perusing Github all
+the time to see what other people are working on and half the time I
+stumble upon some small, reusable piece of code that I force myself to
+grab and dump into my own little directory of code snippets.</p>
+
+<p>The more and more I collect, the more I realize the process of finding
+good code snippets on the web is pretty terrible. I often just hit
+google and wind up on stack overflow, having to sift through a bunch of
+people&#39;s ramblings and log files and whatnot. Why isn&#39;t there a better
+place to search for these small bits of wonder-code?</p>
+
+<p>I set out to see if it already existed, and it turns out that it
+doesn&#39;t. So I plan on creating one.</p>
+
+<h3>Side Story</h3>
+
+<p>My sister-in-law went into labor last week so my wife and I
+went down to Lemoore Naval Air Station to see the baby. As I was driving
+off the base I saw a sign indicating which way to turn to get to the
+Armory. That&#39;s when it hit me. This code snippet site need not only
+focus on code snippets. I want to make it a place where developers get
+equipped in every way they need.</p>
+
+<h3>The Plan</h3>
+
+<p>Offer the soldiers (developers) a chance to stock up on weapons
+(snippets), load up on ammo (frameworks/libraries), engage in training
+(walkthroughs) and choose their
+barracks (development environments). The latter will most likely allow
+for users to peruse various <a href="http://vagrantup.com">vagrant</a> boxes and
+associated chef recipes (if you don&#39;t know about vagrant, get it).</p>
+
+<h3>Implementation</h3>
+
+<p>Like I said I love Gists. Rather than re-inventing the wheel
+this new project is simply going to
+leverage gists. I&#39;ll add some meta-data to various gists to create a place
+where code snippets can be searched and saved more easily.</p>
+
+<p>Why hasn&#39;t Github added this to Gist already? My bet is they&#39;ve been
+busy. You know, redefining how everyone codes? They might
+get around to improving Gist, but for now, I&#39;m taking it upon myself.
+Who&#39;s with me?</p>
+
+<h3>I Need Help</h3>
+
+<p>I don&#39;t know about you, but this sounds like a dream to me. But I&#39;m
+going to need help in getting some solid content onto this site. If you
+can help spread the word, or send me some code snippets you&#39;ve found to
+be invaluable, it would go a long way toward getting this project off
+the ground.</p>
+
+      </article>
+    </main>
+    <footer>
+      <a href="/" style="border:0">Tyler Benziger</a>
+      <a href="/about" style="border:0">About</a>
+      <a href="https://twitter.com/tybenz" style="border:0">Twitter</a>
+      <a href="https://github.com/tybenz" style="border:0">Github</a>
+    </footer>
+  </body>
+</html>

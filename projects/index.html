@@ -1,0 +1,28 @@
+---
+layout: default
+title: Home
+---
+
+<main>
+    <header>
+      <p class="username"><a href="/" target="_self">{{site.author.name}}</a> Projects</p>
+    </header>
+{% for page in site.pages %}
+  {% if page.project == true %}
+    {% if page.hidden != true %}
+      <article>
+        <header class="heading">
+          {% if page.link %}
+            <h1><a href="{{ page.link }}">
+          {% else %}
+            <h1><a href="{{ page.url | replace: '/index.html', '' }}">
+          {% endif %}
+          {{ page.title }}
+        </a></h1>
+          <p class="timestamp">{{ page.summary }}</p>
+        </header>
+      </article>
+    {% endif %}
+  {% endif %}
+{% endfor %}
+</main>

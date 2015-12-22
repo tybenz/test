@@ -1,0 +1,20 @@
+---
+layout: default
+title: Home
+---
+
+<main>
+    <header>
+      <p class="username"><a href="/" target="_self">{{site.author.name}}</a></p>
+    </header>
+  {% for post in site.posts %}
+    <article>
+      <header class="heading">
+        <h1><a href="{{ post.url }}">{{ post.title }}</a></h1>
+        <p class="timestamp" title="{{ post.date | date: "%b %e %Y" }}">{{ post.date | date: "%b %e %Y" }}</p>
+      </header>
+      </div>
+    </article>
+
+  {% endfor %}
+</main>

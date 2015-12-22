@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <base href="/~/-/">
+    <title> ~</title>
+    <link href="/~/feed" rel="alternate" type="application/atom+xml" />
+    <link href="data:image/gif;base64,R0lGODlhEAAQAPABAA0NDf///yH/C1hNUCBEYXRhWE1QAz94cAAh+QQFAAABACwAAAAAEAAQAAACF4SPqcvtn0KARlJgaYb7dfc14UWW5lEAADs=" rel="icon" type="image/x-icon" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Mono:400,700' rel='stylesheet' type='text/css'>
+    <style>
+    body {
+      font: 16px/1.5em 'Roboto Mono', 'Consolas', 'Andale Mono', 'Monaco', 'Courier New', Courier, monospace;
+      padding: 1ch;
+      margin: 0;
+    }
+    main, footer, body > header {
+      max-width: 64ch;
+      margin: auto;
+    }
+    main {
+      box-sizing: border-box;
+      padding: 1ch 0 2ch;
+      min-height: calc(100vh - 12ch);
+    }
+    h1 {
+      font-size: 1em;
+      font-weight: 700;
+    }
+    h1, .timestamp {
+      margin: 0;
+    }
+    a {
+      color: blue;
+      background-image: linear-gradient(to bottom,blue 75%,blue 75%);
+      text-shadow: -1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white;
+      background-repeat: repeat-x;
+      background-size: 1px 1px;
+      background-position: 0 96%;
+      text-decoration: none;
+    }
+    .heading a {
+      color: black;
+      background-image: linear-gradient(to bottom,black 75%,black 75%);
+    }
+    .heading {
+      margin: 0 0 2ch;
+      padding: 0;
+    }
+    article.txt p {
+      white-space: pre-wrap;
+    }
+    .username a {
+      text-shadow: none;
+      background-image: none;
+      background-color: #333;
+      color: #EEE;
+      padding: 1ch;
+      border: 0;
+    }
+    hr {
+      border: 1px solid #ECECEC;
+    }
+    p {
+      margin: 1.5em 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-size: 1em;
+    }
+    pre {
+      padding: 1ch;
+      background-color: #f4f4f4;
+      overflow-x: auto;
+    }
+    ul, ol {
+      padding-left: 0;
+    }
+    li > ul, li > ol {
+      padding-left: 2ch;
+    }
+    blockquote {
+      font-style: italic;
+      margin: 1.5em 2ch;
+    }
+    img {
+      max-width:100%;
+    }
+    footer a {
+      color: lightgrey;
+      background-image: linear-gradient(to bottom,lightgrey 75%,lightgrey 75%);
+    }
+    @media screen and (min-width:1367px) {
+      body {
+        font: 20px/1.75em 'Roboto Mono';
+      }
+      hr {
+        border: 4px solid #ECECEC;
+      }
+    }
+    </style>
+  </head>
+  <body class="index">
+      <p>This is a jQuery Plugin designed to work with Rail&#39;s UJS remote forms.
+It makes it easier to automatically inject populated templates into your page based on a JSON AJAX response.</p>
+
+<h2>Example</h2>
+
+<p>This is an example of a form that is meant to grab a block of &quot;posts&quot; and inject them into a feed div</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- Initializing the ajaxAppend plugin --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+    <span class="nx">$</span><span class="p">(</span> <span class="s1">&#39;#rf1&#39;</span> <span class="p">).</span><span class="nx">ajaxAppend</span><span class="p">({</span>
+        <span class="nx">dataName</span><span class="o">:</span> <span class="s1">&#39;stories&#39;</span><span class="p">,</span>
+        <span class="nx">templates</span><span class="o">:</span> <span class="p">[{</span>
+            <span class="nx">template</span><span class="o">:</span> <span class="nx">$</span><span class="p">(</span> <span class="s2">&quot;#story-template&quot;</span> <span class="p">).</span><span class="nx">text</span><span class="p">(),</span>
+            <span class="nx">selector</span><span class="o">:</span> <span class="s1">&#39;#whats-new-feed&#39;</span><span class="p">,</span>
+            <span class="nx">order</span><span class="o">:</span> <span class="s1">&#39;prepend&#39;</span>
+        <span class="p">}],</span>
+        <span class="nx">formReset</span><span class="o">:</span> <span class="kc">false</span>
+    <span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span>
+
+<span class="c">&lt;!-- Template for our news story --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;underscore-template&quot;</span> <span class="na">id=</span><span class="s">&quot;story-template&quot;</span><span class="nt">&gt;</span>
+    <span class="o">&lt;%</span> <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">stories</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">post</span> <span class="p">)</span> <span class="p">{</span> <span class="o">%&gt;</span>
+        <span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;post&quot;</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">h4</span><span class="o">&gt;&lt;</span><span class="nx">span</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;date&quot;</span><span class="o">&gt;&lt;</span><span class="err">/span&gt;&lt;/h4&gt;</span>
+            <span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+                
+            <span class="o">&lt;</span><span class="err">/p&gt;</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;</span>
+    <span class="o">&lt;%</span> <span class="p">});</span> <span class="o">%&gt;</span>
+<span class="nt">&lt;/script&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;whats-new&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;h3&gt;</span>News Example<span class="nt">&lt;/h3&gt;</span>
+    <span class="nt">&lt;form</span> <span class="na">id=</span><span class="s">&quot;rf1&quot;</span> <span class="na">data-remote=</span><span class="s">&quot;true&quot;</span> <span class="na">action=</span><span class="s">&quot;get.php&quot;</span> <span class="na">method=</span><span class="s">&quot;post&quot;</span> <span class="na">style=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;hidden&quot;</span> <span class="na">name=</span><span class="s">&quot;num&quot;</span> <span class="na">value=</span><span class="s">&quot;0&quot;</span> <span class="nt">/&gt;</span>
+    
+        <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Get More News&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/form&gt;</span>
+    <span class="c">&lt;!-- This is where the templates will be injected --&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;whats-new-feed&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;br</span> <span class="na">class=</span><span class="s">&quot;clear&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/div&gt;</span></code></pre></figure>
+
+    <footer>
+      <a href="/" style="border:0">Tyler Benziger</a>
+      <a href="/about" style="border:0">About</a>
+      <a href="https://twitter.com/tybenz" style="border:0">Twitter</a>
+      <a href="https://github.com/tybenz" style="border:0">Github</a>
+    </footer>
+  </body>
+</html>

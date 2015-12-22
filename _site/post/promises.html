@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <base href="/~/-/">
+    <title> ~</title>
+    <link href="/~/feed" rel="alternate" type="application/atom+xml" />
+    <link href="data:image/gif;base64,R0lGODlhEAAQAPABAA0NDf///yH/C1hNUCBEYXRhWE1QAz94cAAh+QQFAAABACwAAAAAEAAQAAACF4SPqcvtn0KARlJgaYb7dfc14UWW5lEAADs=" rel="icon" type="image/x-icon" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Mono:400,700' rel='stylesheet' type='text/css'>
+    <style>
+    body {
+      font: 16px/1.5em 'Roboto Mono', 'Consolas', 'Andale Mono', 'Monaco', 'Courier New', Courier, monospace;
+      padding: 1ch;
+      margin: 0;
+    }
+    main, footer, body > header {
+      max-width: 64ch;
+      margin: auto;
+    }
+    main {
+      box-sizing: border-box;
+      padding: 1ch 0 2ch;
+      min-height: calc(100vh - 12ch);
+    }
+    h1 {
+      font-size: 1em;
+      font-weight: 700;
+    }
+    h1, .timestamp {
+      margin: 0;
+    }
+    a {
+      color: blue;
+      background-image: linear-gradient(to bottom,blue 75%,blue 75%);
+      text-shadow: -1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white;
+      background-repeat: repeat-x;
+      background-size: 1px 1px;
+      background-position: 0 96%;
+      text-decoration: none;
+    }
+    .heading a {
+      color: black;
+      background-image: linear-gradient(to bottom,black 75%,black 75%);
+    }
+    .heading {
+      margin: 0 0 2ch;
+      padding: 0;
+    }
+    article.txt p {
+      white-space: pre-wrap;
+    }
+    .username a {
+      text-shadow: none;
+      background-image: none;
+      background-color: #333;
+      color: #EEE;
+      padding: 1ch;
+      border: 0;
+    }
+    hr {
+      border: 1px solid #ECECEC;
+    }
+    p {
+      margin: 1.5em 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-size: 1em;
+    }
+    pre {
+      padding: 1ch;
+      background-color: #f4f4f4;
+      overflow-x: auto;
+    }
+    ul, ol {
+      padding-left: 0;
+    }
+    li > ul, li > ol {
+      padding-left: 2ch;
+    }
+    blockquote {
+      font-style: italic;
+      margin: 1.5em 2ch;
+    }
+    img {
+      max-width:100%;
+    }
+    footer a {
+      color: lightgrey;
+      background-image: linear-gradient(to bottom,lightgrey 75%,lightgrey 75%);
+    }
+    @media screen and (min-width:1367px) {
+      body {
+        font: 20px/1.75em 'Roboto Mono';
+      }
+      hr {
+        border: 4px solid #ECECEC;
+      }
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      padding-top: 30px; height: 0; overflow: hidden;
+    }
+
+    .video-container.skinny {
+      padding-bottom: 43.076923%;
+    }
+
+    .video-container.slate {
+      padding-bottom: 50%;
+      margin-bottom: 1em;
+    }
+
+    .video-container iframe,
+    .video-container object,
+    .video-container embed {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="username"><a href="/">Tyler Benziger</a></p>
+      </header>
+      <article>
+        <header class="heading">
+          <h1>Promises</h1>
+          <p class="timestamp">November 10, 2014</p>
+          <hr>
+        </header>
+        <p>I don&#39;t know if everybody is using them yet, but if you&#39;re putting off like I
+was, here are two things about Promises that may convince you to start using them:</p>
+
+<ol>
+<li>Error handling</li>
+<li>Collections</li>
+</ol>
+
+<p><strong>Note: I&#39;ve only
+really used <a href="https://github.com/petkaantonov/bluebird/blob/master/API.md">bluebird</a> so apologies if these things aren&#39;t universal
+to all Promise libraries</strong></p>
+
+<h2>Error handling</h2>
+
+<p>If you&#39;ve done a crazy amount of nested callbacks before, you know what this
+one&#39;s about. Handling errors all the way down a trail of nested callbacks is
+fairly straightforward, but it&#39;s so repetitive that it can be tempting to not
+do it at all.</p>
+
+<p>Example (yes, my examples are NodeJS-specific):</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// app is an express or restify app</span>
+<span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span> <span class="s1">&#39;/route&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span> <span class="s1">&#39;path/to/file.json&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">encoding</span><span class="o">:</span> <span class="s1">&#39;utf8&#39;</span> <span class="p">},</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">err</span><span class="p">,</span> <span class="nx">contents</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="nx">err</span> <span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">next</span><span class="p">(</span> <span class="nx">err</span> <span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span> <span class="nx">contents</span> <span class="p">);</span>
+
+        <span class="nx">request</span><span class="p">(</span> <span class="s1">&#39;http://service.com/api/get_info?parameter=&#39;</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">parameter</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">err</span><span class="p">,</span> <span class="nx">response</span> <span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span> <span class="nx">err</span> <span class="p">)</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">next</span><span class="p">(</span> <span class="nx">err</span> <span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="p">(</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">!==</span> <span class="mi">200</span> <span class="p">)</span> <span class="p">{</span>
+                <span class="nx">err</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span> <span class="nx">response</span><span class="p">.</span><span class="nx">body</span> <span class="p">);</span>
+                <span class="k">return</span> <span class="nx">next</span><span class="p">(</span> <span class="nx">err</span> <span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span> <span class="nx">response</span><span class="p">.</span><span class="nx">body</span> <span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>First of all, we know nested callbacks are a bad idea. Second of all, this
+whole <code>if error throw error...</code> thing is repetitive and unnecessary with the right
+abstraction.</p>
+
+<p>Same example with promises:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span> <span class="s1">&#39;/route&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileAsync</span><span class="p">(</span> <span class="s1">&#39;path/to/file.json&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">encoding</span><span class="o">:</span> <span class="s1">&#39;utf8&#39;</span> <span class="p">}</span> <span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">contents</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span> <span class="nx">contents</span> <span class="p">);</span>
+
+        <span class="c1">// This example is about error handling, but this feature</span>
+        <span class="c1">// of promises is awesome. If a then callback returns a</span>
+        <span class="c1">// promise, the next then callback will have that promise&#39;s</span>
+        <span class="c1">// resolved values as its arguments.</span>
+        <span class="k">return</span> <span class="nx">requestAsync</span><span class="p">(</span> <span class="s1">&#39;http://service.com/api/get_info?parameter=&#39;</span> <span class="o">+</span> <span class="nx">data</span><span class="p">.</span><span class="nx">parameter</span> <span class="p">);</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">response</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">!==</span> <span class="mi">200</span> <span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">err</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">body</span> <span class="p">);</span>
+            <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span> <span class="nx">response</span><span class="p">.</span><span class="nx">body</span> <span class="p">);</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="k">catch</span><span class="p">(</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">err</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="nx">next</span><span class="p">(</span> <span class="nx">err</span> <span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>Much cleaner, no? Notice too, that I&#39;m using Express error handling here. In
+the first example, I call <code>next</code> repeatedly. In the Promisified version, it&#39;s
+only called once.</p>
+
+<h2>Collections</h2>
+
+<p>Without promises:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span> <span class="s1">&#39;/assets&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">ids</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">ids</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span> <span class="s1">&#39;,&#39;</span> <span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">ids</span><span class="p">.</span><span class="nx">len</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">var</span> <span class="nx">stop</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+    <span class="kd">var</span> <span class="nx">dataCallback</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">err</span><span class="p">,</span> <span class="nx">response</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="nx">err</span> <span class="p">)</span> <span class="p">{</span>
+            <span class="nx">stop</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="nx">next</span><span class="p">(</span> <span class="nx">err</span> <span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="nx">stop</span> <span class="p">)</span> <span class="p">{</span>
+            <span class="nx">data</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span> <span class="nx">response</span> <span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span> <span class="nx">data</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;=</span> <span class="nx">len</span> <span class="p">)</span> <span class="p">{</span>
+                <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span>
+                    <span class="nx">request_id</span><span class="o">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">requestId</span><span class="p">,</span>
+                    <span class="nx">data</span><span class="o">:</span> <span class="nx">data</span>
+                <span class="p">});</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span> <span class="nx">ids</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">id</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="nx">metadataService</span><span class="p">.</span><span class="nx">getInfo</span><span class="p">(</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">dataCallback</span> <span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>This is the coolest... Watch this:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">app</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span> <span class="s1">&#39;/assets&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span> <span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
+        <span class="nx">_</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span> <span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">.</span><span class="nx">ids</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span> <span class="s1">&#39;,&#39;</span> <span class="p">),</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">id</span> <span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">$metadataService</span><span class="p">.</span><span class="nx">getInfo</span><span class="p">(</span> <span class="nx">id</span> <span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">data</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">({</span>
+            <span class="nx">request_id</span><span class="o">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">requestId</span><span class="p">,</span>
+            <span class="nx">data</span><span class="o">:</span> <span class="nx">data</span>
+        <span class="p">});</span>
+    <span class="p">})</span>
+    <span class="p">.</span><span class="k">catch</span><span class="p">(</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">err</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="nx">next</span><span class="p">(</span> <span class="nx">err</span> <span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+<p>What&#39;s going on here? The endpoint is set up to take a comma-separated list of
+image ids. I create an array of promises by calling <code>$metadataService.getInfo</code>
+for each id. <code>Promise.all</code> lets you wrap an array of promises and bind to the
+completion of all of them. I can&#39;t tell you what a lifesaver this has been!</p>
+
+      </article>
+    </main>
+    <footer>
+      <a href="/" style="border:0">Tyler Benziger</a>
+      <a href="/about" style="border:0">About</a>
+      <a href="https://twitter.com/tybenz" style="border:0">Twitter</a>
+      <a href="https://github.com/tybenz" style="border:0">Github</a>
+    </footer>
+  </body>
+</html>

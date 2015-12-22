@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <base href="/~/-/">
+    <title> ~</title>
+    <link href="/~/feed" rel="alternate" type="application/atom+xml" />
+    <link href="data:image/gif;base64,R0lGODlhEAAQAPABAA0NDf///yH/C1hNUCBEYXRhWE1QAz94cAAh+QQFAAABACwAAAAAEAAQAAACF4SPqcvtn0KARlJgaYb7dfc14UWW5lEAADs=" rel="icon" type="image/x-icon" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Mono:400,700' rel='stylesheet' type='text/css'>
+    <style>
+    body {
+      font: 16px/1.5em 'Roboto Mono', 'Consolas', 'Andale Mono', 'Monaco', 'Courier New', Courier, monospace;
+      padding: 1ch;
+      margin: 0;
+    }
+    main, footer, body > header {
+      max-width: 64ch;
+      margin: auto;
+    }
+    main {
+      box-sizing: border-box;
+      padding: 1ch 0 2ch;
+      min-height: calc(100vh - 12ch);
+    }
+    h1 {
+      font-size: 1em;
+      font-weight: 700;
+    }
+    h1, .timestamp {
+      margin: 0;
+    }
+    a {
+      color: blue;
+      background-image: linear-gradient(to bottom,blue 75%,blue 75%);
+      text-shadow: -1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white;
+      background-repeat: repeat-x;
+      background-size: 1px 1px;
+      background-position: 0 96%;
+      text-decoration: none;
+    }
+    .heading a {
+      color: black;
+      background-image: linear-gradient(to bottom,black 75%,black 75%);
+    }
+    .heading {
+      margin: 0 0 2ch;
+      padding: 0;
+    }
+    article.txt p {
+      white-space: pre-wrap;
+    }
+    .username a {
+      text-shadow: none;
+      background-image: none;
+      background-color: #333;
+      color: #EEE;
+      padding: 1ch;
+      border: 0;
+    }
+    hr {
+      border: 1px solid #ECECEC;
+    }
+    p {
+      margin: 1.5em 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-size: 1em;
+    }
+    pre {
+      padding: 1ch;
+      background-color: #f4f4f4;
+      overflow-x: auto;
+    }
+    ul, ol {
+      padding-left: 0;
+    }
+    li > ul, li > ol {
+      padding-left: 2ch;
+    }
+    blockquote {
+      font-style: italic;
+      margin: 1.5em 2ch;
+    }
+    img {
+      max-width:100%;
+    }
+    footer a {
+      color: lightgrey;
+      background-image: linear-gradient(to bottom,lightgrey 75%,lightgrey 75%);
+    }
+    @media screen and (min-width:1367px) {
+      body {
+        font: 20px/1.75em 'Roboto Mono';
+      }
+      hr {
+        border: 4px solid #ECECEC;
+      }
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      padding-top: 30px; height: 0; overflow: hidden;
+    }
+
+    .video-container.skinny {
+      padding-bottom: 43.076923%;
+    }
+
+    .video-container.slate {
+      padding-bottom: 50%;
+      margin-bottom: 1em;
+    }
+
+    .video-container iframe,
+    .video-container object,
+    .video-container embed {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="username"><a href="/">Tyler Benziger</a></p>
+      </header>
+      <article>
+        <header class="heading">
+          <h1>ThemeBot</h1>
+          <p class="timestamp">July 24, 2012</p>
+          <hr>
+        </header>
+        <p>Working on ThemeRoller was a lot of fun and it taught me a lot about client-side styling and user interfaces in general.
+It has also stood out in my mind as I continue to interact with more and more CSS frameworks, and I keep longing for more
+tools like ThemeRoller.</p>
+
+<p>Somewhere along the line with ThemeRoller, someone asked me, &quot;Why is this tool specific to one framework?
+Couldn&#39;t you create a tool that would work with any CSS file?&quot;. My immediate reaction was that this
+person clearly didn&#39;t understand the complexity of the problem (turns out, it&#39;s not that complex at all).</p>
+
+<p>But the thing is, even after wrapping up my involvement with jQuery Mobile, that person&#39;s question was still echoing in
+the back of my mind. Would it be that hard to develop some framework-agnostic, WYSIWYG theme creation tool?</p>
+
+<p>My immediate thought was to improve upon current developer tools. We all know Firebug and Chrome&#39;s developer tools work 
+just fine for debugging and quick styling, but I think the app I have in mind would do more for non-developers
+beginning to dabble in some frameworks like jQuery Mobile or Twitter Bootstrap.</p>
+
+<p>I could potentially put a little time and effort into forking/extending a tool like Firebug and adding some nice color
+pickers and number spinners, but at the end of the day it wouldn&#39;t reach as many people or be all that usable.</p>
+
+<p>So here&#39;s my thought. I want to create an extensible and configurable theming application that any developer can
+grab, tweak, and apply for his specific framework. This way, each framework could potentially have it&#39;s own
+customized version of the tool, but at the end of the day the basic ingredients are all the same.</p>
+
+<p>What are those ingredients? Glad you asked:</p>
+
+<ol>
+<li>Fast, light-weight parsing of any CSS file</li>
+<li>UI elements specialized towards various CSS rules</li>
+<li>Colorpicker</li>
+<li>An inspector tool for point and click edits</li>
+<li>Draggable colors with customizable behaviors</li>
+<li>Undo/Redo Logs of every action the user makes</li>
+<li>Downloadable/Shareable themes</li>
+</ol>
+
+<p>As far as parsing goes, for now I&#39;m thinking that the API will mostly handle the business logic of the actual skinning.
+But the rules that a user has access to will need to be specified by the developer. This can be done with some esoteric CSS
+comment for every rule that needs to be represented in the UI. Or, more likely, some specific JSON that the developer could write
+out quickly that would list which rules are editable, and how they are grouped.</p>
+
+<p>The potential for this app extends beyond just the big-name frameworks. The tool could also be used when designing a site
+for a client. I&#39;ll give you a scenario. You whip up a site design, and your client is unhappy with your choice of typeface,
+color, spacing, etc, but he likes the overall layout. Why bother iterating on color choices? Design a solid layout, and then let
+the clients skin the page themselves. All you do is provide a base theme that can be easily tweaked. Sounds nice right? </p>
+
+<p>Ok, so there&#39;s the overall outline. I&#39;d love to get some feedback on the idea, as well as any questions/suggestions you
+might have about implementing this thing. Give me a shout-out on
+<a href="http://twitter.com/tybenz">Twitter</a>,
+<a href="mailto:tabenziger@gmail.com">email</a> me or submit a ticket on the <a href="https://github.com/themebot/themebot">Github</a>.</p>
+
+<p>Note: This project is nothing more than a thought for now, so no, there&#39;s no source code to look at. Check back later for
+updates. It will be soon.</p>
+
+      </article>
+    </main>
+    <footer>
+      <a href="/" style="border:0">Tyler Benziger</a>
+      <a href="/about" style="border:0">About</a>
+      <a href="https://twitter.com/tybenz" style="border:0">Twitter</a>
+      <a href="https://github.com/tybenz" style="border:0">Github</a>
+    </footer>
+  </body>
+</html>

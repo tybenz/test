@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <base href="/~/-/">
+    <title> ~</title>
+    <link href="/~/feed" rel="alternate" type="application/atom+xml" />
+    <link href="data:image/gif;base64,R0lGODlhEAAQAPABAA0NDf///yH/C1hNUCBEYXRhWE1QAz94cAAh+QQFAAABACwAAAAAEAAQAAACF4SPqcvtn0KARlJgaYb7dfc14UWW5lEAADs=" rel="icon" type="image/x-icon" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Mono:400,700' rel='stylesheet' type='text/css'>
+    <style>
+    body {
+      font: 16px/1.5em 'Roboto Mono', 'Consolas', 'Andale Mono', 'Monaco', 'Courier New', Courier, monospace;
+      padding: 1ch;
+      margin: 0;
+    }
+    main, footer, body > header {
+      max-width: 64ch;
+      margin: auto;
+    }
+    main {
+      box-sizing: border-box;
+      padding: 1ch 0 2ch;
+      min-height: calc(100vh - 12ch);
+    }
+    h1 {
+      font-size: 1em;
+      font-weight: 700;
+    }
+    h1, .timestamp {
+      margin: 0;
+    }
+    a {
+      color: blue;
+      background-image: linear-gradient(to bottom,blue 75%,blue 75%);
+      text-shadow: -1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white;
+      background-repeat: repeat-x;
+      background-size: 1px 1px;
+      background-position: 0 96%;
+      text-decoration: none;
+    }
+    .heading a {
+      color: black;
+      background-image: linear-gradient(to bottom,black 75%,black 75%);
+    }
+    .heading {
+      margin: 0 0 2ch;
+      padding: 0;
+    }
+    article.txt p {
+      white-space: pre-wrap;
+    }
+    .username a {
+      text-shadow: none;
+      background-image: none;
+      background-color: #333;
+      color: #EEE;
+      padding: 1ch;
+      border: 0;
+    }
+    hr {
+      border: 1px solid #ECECEC;
+    }
+    p {
+      margin: 1.5em 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-size: 1em;
+    }
+    pre {
+      padding: 1ch;
+      background-color: #f4f4f4;
+      overflow-x: auto;
+    }
+    ul, ol {
+      padding-left: 0;
+    }
+    li > ul, li > ol {
+      padding-left: 2ch;
+    }
+    blockquote {
+      font-style: italic;
+      margin: 1.5em 2ch;
+    }
+    img {
+      max-width:100%;
+    }
+    footer a {
+      color: lightgrey;
+      background-image: linear-gradient(to bottom,lightgrey 75%,lightgrey 75%);
+    }
+    @media screen and (min-width:1367px) {
+      body {
+        font: 20px/1.75em 'Roboto Mono';
+      }
+      hr {
+        border: 4px solid #ECECEC;
+      }
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      padding-top: 30px; height: 0; overflow: hidden;
+    }
+
+    .video-container.skinny {
+      padding-bottom: 43.076923%;
+    }
+
+    .video-container.slate {
+      padding-bottom: 50%;
+      margin-bottom: 1em;
+    }
+
+    .video-container iframe,
+    .video-container object,
+    .video-container embed {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="username"><a href="/">Tyler Benziger</a></p>
+      </header>
+      <article>
+        <header class="heading">
+          <h1>Taking advantage of sessions in Vim</h1>
+          <p class="timestamp">February  6, 2014</p>
+          <hr>
+        </header>
+        <p>A few months ago, on my daily hunt for new, useful Vim plugins, I discovered
+<a href="http://github.com/mhinz/vim-startify">vim-startify</a>. Startify is a beautiful
+and organized startup screen for Vim. It provides shortcuts into files from
+your working directory, a list of bookmarks to files you edit all the time, and
+your most-recently edited files. As I was going over its docs, I also
+discovered that it can list out Vim sessions. I&#39;d never read about sessions
+before. So I began googling.</p>
+
+<p>Vim provides some commands that let you store sessions based on the current
+state of Vim. You can load in previously created sessions with <code>source</code> (just
+like any other Vim script). The <code>mksession</code> command, out-of-the-box, stores every
+little detail about your current session &mdash; plugins, scripts, which buffers are
+loaded, what your tabs and windows are doing.  Because of this, a <code>mksession</code>
+file can be really large and really ugly. I actually found that most of the
+things <code>mksession</code> was saving to be a bit redundant. For the most part, the
+scripts I want executed when I launch Vim are all present in my <code>.vimrc</code>. So I
+took the bits that I needed and starting creating my own session files by hand.</p>
+
+<p>The only commands I really need in a project-specific session have to do with
+changing Vim&#39;s working directory, opening files into buffers, and choosing
+which of those buffers to edit (I usually start with two files in vertical
+split panes).</p>
+
+<p>Here&#39;s one of my session files (<code>vimdeck.vim</code>):</p>
+
+<div class="highlight">
+<pre><code><span class="k">cd</span> ~/src/vimdeck
+<span class="k">args</span> lib/* lib/templates/* bin/vimdeck Rakefile Gemfile README.md slides.md
+<span class="k">edit</span> slides.md
+<span class="k">vertical sb</span> lib/vimdeck.rb</code></pre>
+</div>
+
+<p>I change the working directory to the project folder, open files into buffers,
+then I choose which two files I want to start with (in the above case slides.md
+and lib/vimdeck.rb). And I can execute all of this by typing:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">:source ~/.vim/sessions/vimdeck.vim
+</code></pre></div>
+<p>Now sessions get even cooler when you pair sessions with Startify. Startify
+will list all session files from a directory and provide keyboard shortcuts to
+execute them. I put my session files into <code>~/.vim/sessions</code> and tell startify
+where they&#39;re located with:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">let g:startify_session_dir = &quot;~/.vim/sessions&quot;
+</code></pre></div>
+<p>Now everytime I start Vim, I&#39;m greeted with this:</p>
+
+<p><img src="http://awes0.me/startify.png" alt=""></p>
+
+<p>Note that the first section consists of a list of numbered sessions. Startify
+assigns shortcut keys to them so if I want to jump into my Vimdeck session, all
+I have to do is open Vim and hit <code>h</code> and it will drop me into the right
+directory with all of the files I want to be able to edit for that project.</p>
+
+<p>Startify also provides directory-level session file detection. So it will check Vim&#39;s
+working directory for a <code>Session.vim</code> file and write out a shortcut for that
+session as well. Useful if you&#39;d like to include your session file in your
+projects git repository.</p>
+
+<p>Make sure you grab <a href="http://github.com/mhinz/vim-startify">startify</a> and start
+playing around with its session support. Also, hit me up on
+<a href="http://twitter.com/tybenz">twitter</a> if you have any questions/suggestions.</p>
+
+      </article>
+    </main>
+    <footer>
+      <a href="/" style="border:0">Tyler Benziger</a>
+      <a href="/about" style="border:0">About</a>
+      <a href="https://twitter.com/tybenz" style="border:0">Twitter</a>
+      <a href="https://github.com/tybenz" style="border:0">Github</a>
+    </footer>
+  </body>
+</html>

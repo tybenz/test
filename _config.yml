@@ -1,0 +1,19 @@
+# Dependencies
+highlighter:         pygments
+markdown: redcarpet
+
+# Permalinks
+permalink:        /post/:title
+
+# Setup
+title:            "Tyler Benziger"
+description:      "Tyler Benziger writes about things"
+url:              http://tybenz.com
+baseurl:          "/"
+
+author:
+  name:           "Tyler Benziger"
+
+# Custom vars
+twitter:        https://twitter.com/tybenz
+github:         https://github.com/tybenz

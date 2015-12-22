@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <base href="/~/-/">
+    <title> ~</title>
+    <link href="/~/feed" rel="alternate" type="application/atom+xml" />
+    <link href="data:image/gif;base64,R0lGODlhEAAQAPABAA0NDf///yH/C1hNUCBEYXRhWE1QAz94cAAh+QQFAAABACwAAAAAEAAQAAACF4SPqcvtn0KARlJgaYb7dfc14UWW5lEAADs=" rel="icon" type="image/x-icon" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Mono:400,700' rel='stylesheet' type='text/css'>
+    <style>
+    body {
+      font: 16px/1.5em 'Roboto Mono', 'Consolas', 'Andale Mono', 'Monaco', 'Courier New', Courier, monospace;
+      padding: 1ch;
+      margin: 0;
+    }
+    main, footer, body > header {
+      max-width: 64ch;
+      margin: auto;
+    }
+    main {
+      box-sizing: border-box;
+      padding: 1ch 0 2ch;
+      min-height: calc(100vh - 12ch);
+    }
+    h1 {
+      font-size: 1em;
+      font-weight: 700;
+    }
+    h1, .timestamp {
+      margin: 0;
+    }
+    a {
+      color: blue;
+      background-image: linear-gradient(to bottom,blue 75%,blue 75%);
+      text-shadow: -1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white;
+      background-repeat: repeat-x;
+      background-size: 1px 1px;
+      background-position: 0 96%;
+      text-decoration: none;
+    }
+    .heading a {
+      color: black;
+      background-image: linear-gradient(to bottom,black 75%,black 75%);
+    }
+    .heading {
+      margin: 0 0 2ch;
+      padding: 0;
+    }
+    article.txt p {
+      white-space: pre-wrap;
+    }
+    .username a {
+      text-shadow: none;
+      background-image: none;
+      background-color: #333;
+      color: #EEE;
+      padding: 1ch;
+      border: 0;
+    }
+    hr {
+      border: 1px solid #ECECEC;
+    }
+    p {
+      margin: 1.5em 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-size: 1em;
+    }
+    pre {
+      padding: 1ch;
+      background-color: #f4f4f4;
+      overflow-x: auto;
+    }
+    ul, ol {
+      padding-left: 0;
+    }
+    li > ul, li > ol {
+      padding-left: 2ch;
+    }
+    blockquote {
+      font-style: italic;
+      margin: 1.5em 2ch;
+    }
+    img {
+      max-width:100%;
+    }
+    footer a {
+      color: lightgrey;
+      background-image: linear-gradient(to bottom,lightgrey 75%,lightgrey 75%);
+    }
+    @media screen and (min-width:1367px) {
+      body {
+        font: 20px/1.75em 'Roboto Mono';
+      }
+      hr {
+        border: 4px solid #ECECEC;
+      }
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      padding-top: 30px; height: 0; overflow: hidden;
+    }
+
+    .video-container.skinny {
+      padding-bottom: 43.076923%;
+    }
+
+    .video-container.slate {
+      padding-bottom: 50%;
+      margin-bottom: 1em;
+    }
+
+    .video-container iframe,
+    .video-container object,
+    .video-container embed {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="username"><a href="/">Tyler Benziger</a></p>
+      </header>
+      <article>
+        <header class="heading">
+          <h1>Visualizr: Fun with Web Audio and Canvas</h1>
+          <p class="timestamp">January 24, 2015</p>
+          <hr>
+        </header>
+        <p>I made a thing with Web Audio and Canvas. It&#39;s a music visualizr. You can play
+with the full thing <a href="http://tybenz.com/visualizr">here</a>, but here&#39;s a quick
+demo of it (music by <a href="http://mrsjxn.com">mrsjxn</a>):</p>
+
+<div class="video-container skinny">
+  <iframe frameborder="0" src="http://tybenz.com/visualizr/#width=15&height=1&gap=12&delay=40&hue=0&animate=out&auto_delay=5000&song=let_go&hide_controls=1&small=1"></iframe>
+</div>
+
+<p>&nbsp;</p>
+
+<h2>Crash-course</h2>
+
+<p>The rest of this blog post will be a sort of crash-course in how to get a basic
+visualization set up with Web Audio and Canvas.</p>
+
+<p>The Web Audio API is well-supported across modern browsers, except for IE (big
+surprise). It allows you to not only play sounds but also manipulate them at a
+very low level.</p>
+
+<p>First, an example of just getting a song to play with Web Audio:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AudioContext</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span> <span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="nx">songUrl</span><span class="p">,</span> <span class="kc">true</span> <span class="p">);</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">responseType</span> <span class="o">=</span> <span class="s1">&#39;arraybuffer&#39;</span><span class="p">;</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">context</span><span class="p">.</span><span class="nx">decodeAudioData</span><span class="p">(</span> <span class="nx">request</span><span class="p">.</span><span class="nx">response</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span> <span class="nx">buffer</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">source</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createBufferSource</span><span class="p">();</span>
+        <span class="nx">source</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span> <span class="nx">context</span><span class="p">.</span><span class="nx">destination</span> <span class="p">);</span>
+        <span class="nx">source</span><span class="p">.</span><span class="nx">buffer</span> <span class="o">=</span> <span class="nx">buffer</span><span class="p">;</span>
+        <span class="nx">source</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span> <span class="mi">0</span> <span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+</code></pre></div>
+<p>Web Audio also contains a set of interfaces that allow you to analyze and
+manipulate frequency data. <code>AnalyserNode</code> is meant for reading frequency data
+only and it&#39;s perfect for the purposes of visualization.</p>
+
+<p>You can create an <code>AnalyserNode</code> with <code>context.createAnalyser()</code>, and &quot;hook it&quot;
+into the audio source with <code>source.connect( analyser )</code>.</p>
+
+<p>Once you have the analyser set up, you can read in frequency data synchronously
+by using <code>anaylser.getByteFrequencyData()</code>. To demonstrate, here&#39;s an example that
+uses <code>setInterval</code> to periodically log the average volume:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="cm">/*</span>
+<span class="cm"> * This is inside decodeAudioData callback</span>
+<span class="cm"> */</span>
+
+<span class="c1">// Set up analyser</span>
+<span class="kd">var</span> <span class="nx">analyser</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createAnalyser</span><span class="p">();</span>
+<span class="nx">analyser</span><span class="p">.</span><span class="nx">smoothingTimeConstant</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">;</span>
+<span class="nx">analyser</span><span class="p">.</span><span class="nx">fftSize</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">bufferLength</span> <span class="o">=</span> <span class="nx">analyser</span><span class="p">.</span><span class="nx">fftSize</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">dataArray</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Uint8Array</span><span class="p">(</span> <span class="nx">bufferLength</span> <span class="p">);</span>
+
+<span class="c1">// This will periodically compute average volume and log it out</span>
+<span class="nx">setInterval</span><span class="p">(</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">analyser</span><span class="p">.</span><span class="nx">getByteFrequencyData</span><span class="p">(</span> <span class="nx">dataArray</span> <span class="p">);</span>
+
+    <span class="c1">// Sum frequency amplitudes</span>
+    <span class="kd">var</span> <span class="nx">values</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span> <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">bufferLength</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">)</span> <span class="p">{</span>
+         <span class="nx">values</span> <span class="o">+=</span> <span class="nx">dataArray</span><span class="p">[</span> <span class="nx">i</span> <span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Log average volume</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="nx">values</span> <span class="o">/</span> <span class="nx">bufferLength</span> <span class="p">);</span>
+<span class="p">},</span> <span class="mi">100</span> <span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">source</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">createBufferSource</span><span class="p">();</span>
+<span class="c1">// Hook up the source to the analyser and the destination</span>
+<span class="nx">source</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span> <span class="nx">analyser</span> <span class="p">);</span>
+<span class="nx">source</span><span class="p">.</span><span class="nx">connect</span><span class="p">(</span> <span class="nx">context</span><span class="p">.</span><span class="nx">destination</span> <span class="p">);</span>
+<span class="nx">source</span><span class="p">.</span><span class="nx">buffer</span> <span class="o">=</span> <span class="nx">buffer</span><span class="p">;</span>
+<span class="nx">source</span><span class="p">.</span><span class="nx">start</span><span class="p">(</span> <span class="mi">0</span> <span class="p">);</span>
+</code></pre></div>
+<p>Now, it&#39;s time to have fun with canvas. We&#39;ve got some volume data. Let&#39;s do something with it.</p>
+
+<p>First, a couple quick notes about canvas:</p>
+
+<ol>
+<li>We can call <code>createContext( &#39;2d&#39; )</code> on the canvas DOM element to get the rendering
+context. This is the object that gives you access to all the drawing methods</li>
+<li>Use <code>requestAnimationFrame</code>, not <code>setInterval</code> for constant re-rendering.
+<code>requestAnimationFrame</code> is the browsers way of binding a callback to the next
+tick of the browser&#39;s internal render loop. It&#39;s much more performant, and
+simple to use.</li>
+<li>On each tick of the clock, wipe the canvas clean. Each frame will be drawn from scratch.
+We&#39;ll do this with <code>clearReact( 0, 0, canvasWidth, canvasHeight )</code>.</li>
+</ol>
+
+<p>Here&#39;s a quick example using <code>requestAnimationFrame</code>, <code>clearRect</code> and
+<code>fillRect</code> to draw a rectangle whose height matches the average volume:</p>
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">context</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AudioContext</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">analyser</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">bufferLength</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">dataArray</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Uint8Array</span><span class="p">(</span> <span class="nx">bufferLength</span> <span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span> <span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;https://s3.amazonaws.com/tybenz.assets/visualizr/really_wanna.mp3&#39;</span><span class="p">,</span> <span class="kc">true</span> <span class="p">);</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">responseType</span> <span class="o">=</span> <span class="s1">&#39;arraybuffer&#39;</span><span class="p">;</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Audio stuff goes in here</span>
+    <span class="c1">// analyser is initialized and its fftSize</span>
+    <span class="c1">// is set to bufferLength (1024)</span>
+    <span class="c1">// Also, draw will be kicked off after it&#39;s all set up</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span> <span class="s1">&#39;canvas&#39;</span> <span class="p">);</span>
+<span class="kd">var</span> <span class="nx">canvasWidth</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">canvasHeight</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">rectWidth</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">ctx</span> <span class="o">=</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span> <span class="s1">&#39;2d&#39;</span> <span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">draw</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">analyser</span><span class="p">.</span><span class="nx">getByteFrequencyData</span><span class="p">(</span> <span class="nx">dataArray</span> <span class="p">);</span>
+
+    <span class="c1">// Sum frequency amplitudes</span>
+    <span class="kd">var</span> <span class="nx">values</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span> <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">bufferLength</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">)</span> <span class="p">{</span>
+         <span class="nx">values</span> <span class="o">+=</span> <span class="nx">dataArray</span><span class="p">[</span> <span class="nx">i</span> <span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="kd">var</span> <span class="nx">volume</span> <span class="o">=</span> <span class="nx">values</span> <span class="o">/</span> <span class="nx">bufferLength</span><span class="p">;</span>
+
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">clearRect</span><span class="p">(</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">canvasWidth</span><span class="p">,</span> <span class="nx">canvasHeight</span> <span class="p">);</span>
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span><span class="p">;</span>
+    <span class="nx">ctx</span><span class="p">.</span><span class="nx">fillRect</span><span class="p">(</span>
+        <span class="nx">canvasWidth</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="nx">rectWidth</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="nx">canvasHeight</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="nx">volume</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="nx">rectWidth</span><span class="p">,</span>
+        <span class="nx">volume</span>
+    <span class="p">);</span>
+    <span class="nx">requestAnimationFrame</span><span class="p">(</span> <span class="nx">draw</span> <span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>And that&#39;s it. The visualizr I created wasn&#39;t much different from this example.
+After setting this up, I just worked on improving the animation. I created a collection of
+bars whose heights decrease as you go away from the center. I then added a
+delay to when the change to the smaller bars&#39; heights gets applied.</p>
+
+<p>If you visit the full visualizr here: <a href="http://tybenz.com/visualizr">http://tybenz.com/visualizr</a>, you can
+play with various parameters and see how it effects the animation. If you&#39;d
+like to see more details, the source is up on <a href="http://github.com/tybenz/visualizr">GitHub</a> and
+<a href="http://codepen.io/tybenz/pen/dPRWJa">CodePen</a>.</p>
+
+<p>As always, if you have questions/comments, you can find me on
+<a href="http://twitter.com/tybenz">Twitter</a>.</p>
+
+      </article>
+    </main>
+    <footer>
+      <a href="/" style="border:0">Tyler Benziger</a>
+      <a href="/about" style="border:0">About</a>
+      <a href="https://twitter.com/tybenz" style="border:0">Twitter</a>
+      <a href="https://github.com/tybenz" style="border:0">Github</a>
+    </footer>
+  </body>
+</html>
